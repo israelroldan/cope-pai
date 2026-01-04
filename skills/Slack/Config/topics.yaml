@@ -1,0 +1,58 @@
+# Topic Tracking Configuration
+# Keywords and phrases to monitor across all channels
+
+topics:
+  platform:
+    keywords:
+      - platform
+      - "the platform"
+    alert: true
+    description: "Core product discussions"
+
+  product:
+    keywords:
+      - product
+      - "product team"
+      - "product work"
+    alert: true
+    description: "Product-related discussions"
+
+  website:
+    keywords:
+      - website
+      - "the site"
+      - tatoma.eu
+    alert: true
+    description: "Website discussions"
+
+  hub:
+    keywords:
+      - hub
+      - "the hub"
+      - "hub platform"
+    alert: true
+    description: "Hub platform discussions"
+
+  robin_radar:
+    keywords:
+      - "robin radar"
+      - robinradar
+      - "robin project"
+    alert: true
+    description: "Robin Radar client project"
+
+  gynzy:
+    keywords:
+      - gynzy
+      - "gynzy project"
+    alert: true
+    description: "Gynzy client project"
+
+# Alert settings
+alert_settings:
+  # Only alert if message is from non-key-person (key people already monitored)
+  skip_key_people: true
+  # Minimum time between alerts for same topic (hours)
+  cooldown_hours: 4
+  # Include in daily digest even if no alert triggered
+  always_digest: true

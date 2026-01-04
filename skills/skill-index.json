@@ -1,0 +1,191 @@
+{
+  "generated": "2026-01-04T22:59:00.000Z",
+  "totalSkills": 8,
+  "alwaysLoadedCount": 1,
+  "deferredCount": 7,
+  "skills": {
+    "core": {
+      "name": "CORE",
+      "path": "CORE/SKILL.md",
+      "fullDescription": "Personal AI Infrastructure core. AUTO-LOADS at session start. USE WHEN any session begins OR user asks about identity, response format, contacts, stack preferences, security protocols, or asset management.",
+      "triggers": [
+        "any",
+        "session",
+        "begins",
+        "user",
+        "asks",
+        "about",
+        "identity",
+        "response",
+        "format",
+        "contacts",
+        "stack",
+        "preferences",
+        "security",
+        "protocols",
+        "asset",
+        "management"
+      ],
+      "workflows": [],
+      "tier": "always"
+    },
+    "prompting": {
+      "name": "Prompting",
+      "path": "Prompting/SKILL.md",
+      "fullDescription": "Meta-prompting system for dynamic prompt generation using templates, standards, and patterns. USE WHEN meta-prompting, template generation, prompt optimization, or programmatic prompt composition.",
+      "triggers": [
+        "meta-prompting",
+        "template",
+        "generation",
+        "prompt",
+        "optimization",
+        "programmatic",
+        "composition"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "createskill": {
+      "name": "CreateSkill",
+      "path": "CreateSkill/SKILL.md",
+      "fullDescription": "Create and validate skills. USE WHEN create skill, new skill, skill structure, canonicalize. SkillSearch('createskill') for docs.",
+      "triggers": [
+        "create",
+        "skill",
+        "new",
+        "structure",
+        "canonicalize"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "cope": {
+      "name": "COPE",
+      "path": "COPE/SKILL.md",
+      "fullDescription": "Personal executive layer. USE WHEN daily start, daily end, clarify decision, organise context, prioritise tasks, execute plan, log decision, week review, what should I focus on, what's on my plate.",
+      "triggers": [
+        "daily",
+        "start",
+        "end",
+        "clarify",
+        "decision",
+        "organise",
+        "context",
+        "prioritise",
+        "tasks",
+        "execute",
+        "plan",
+        "log",
+        "week",
+        "review",
+        "what",
+        "should",
+        "focus",
+        "what's",
+        "plate"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "school": {
+      "name": "School",
+      "path": "School/SKILL.md",
+      "fullDescription": "Amélie & Philippe school schedules and scheduling constraints. USE WHEN school, pickup, dropoff, schedule meeting, book time, calendar, availability, when can I, free slot, afternoon meeting, end of day, kids, children. School times are HARD CONSTRAINTS on all scheduling.",
+      "triggers": [
+        "school",
+        "pickup",
+        "dropoff",
+        "kids",
+        "children",
+        "amélie",
+        "philippe",
+        "afternoon",
+        "end",
+        "day"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "scheduling": {
+      "name": "Scheduling",
+      "path": "Scheduling/SKILL.md",
+      "fullDescription": "Calendar management across Work and Home contexts with school constraint awareness. USE WHEN calendar, schedule meeting, book time, availability, what's on today, free at, create event, when can I meet, find time, agenda, week overview. Integrates with School skill for hard constraints.",
+      "triggers": [
+        "calendar",
+        "schedule",
+        "meeting",
+        "book",
+        "time",
+        "availability",
+        "free",
+        "event",
+        "agenda",
+        "week",
+        "overview"
+      ],
+      "workflows": [
+        "DailyAgenda",
+        "CheckAvailability",
+        "CreateEvent",
+        "SuggestTime",
+        "WeekOverview"
+      ],
+      "tier": "deferred"
+    },
+    "slack": {
+      "name": "Slack",
+      "path": "Slack/SKILL.md",
+      "fullDescription": "Proactive work intelligence from Tatoma Slack. USE WHEN daily briefing, catch up on channels, check what's happening at work, track commitments, find discussions, search slack, post message, check responses. Auto-surfaces relevant context.",
+      "triggers": [
+        "slack",
+        "what's happening at work",
+        "catch up",
+        "any messages",
+        "did anyone respond",
+        "post to slack",
+        "search slack",
+        "commitments",
+        "what did I promise",
+        "founders",
+        "team discussion",
+        "channel"
+      ],
+      "workflows": [
+        "DailyDigest",
+        "CommitmentScan",
+        "ResponseTracker",
+        "ChannelCatchup"
+      ],
+      "tier": "deferred"
+    },
+    "email": {
+      "name": "Email",
+      "path": "Email/SKILL.md",
+      "fullDescription": "Email management for Tatoma work account. USE WHEN inbox, unread, search email, send email, draft, reply, compose, organize inbox, email from, find email, check email, pending responses. Integrates with COPE daily briefings.",
+      "triggers": [
+        "email",
+        "inbox",
+        "unread",
+        "send email",
+        "draft",
+        "reply",
+        "compose",
+        "organize inbox",
+        "email from",
+        "find email",
+        "check email",
+        "pending responses",
+        "gmail"
+      ],
+      "workflows": [
+        "InboxDigest",
+        "SearchEmail",
+        "ReadEmail",
+        "ComposeEmail",
+        "OrganizeInbox",
+        "TrackResponses"
+      ],
+      "tier": "deferred"
+    }
+  }
+}

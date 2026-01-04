@@ -1,0 +1,73 @@
+# Email Account Configuration
+# Phase 1: Tatoma (Work) only
+# Future: Study Stars (own company), Personal (home)
+
+accounts:
+  work:
+    name: "Tatoma"
+    provider: gmail-work          # MCP server name from .mcp.json
+    email: "israel@tatoma.eu"
+    enabled: true
+
+    # Briefing integration settings
+    briefing:
+      enabled: true
+      priority: high              # Always include in briefing
+      labels:                     # Labels to check for unread
+        - "INBOX"
+        - "STARRED"
+        - "IMPORTANT"
+      unread_only: true
+      max_items: 10               # Max emails to show in digest
+
+    # Context detection signals
+    context_signals:
+      domains:                    # Email domains that indicate work context
+        - "@tatoma.eu"
+      keywords:                   # Keywords that indicate priority
+        - "urgent"
+        - "asap"
+        - "action"
+        - "review"
+        - "deadline"
+        - "meeting"
+
+    # VIP senders - always flagged in briefings
+    vip_senders:
+      - email: "sander@tatoma.eu"
+        name: "Sander Kok"
+        role: "Co-founder"
+      - email: "maarten@tatoma.eu"
+        name: "Maarten van den Heuvel-Erp"
+        role: "Co-founder"
+      - email: "thomas@tatoma.eu"
+        name: "Thomas Verhappen"
+        role: "Direct report"
+
+# Response tracking configuration
+response_tracking:
+  enabled: true
+  timeout_hours: 48               # Flag as overdue after this
+
+  # Only track responses to external recipients
+  track_external: true
+
+  # Domains considered "internal" (don't track response time)
+  internal_domains:
+    - "@tatoma.eu"
+
+  # Patterns to ignore (auto-replies, etc.)
+  ignore_patterns:
+    - "noreply@"
+    - "no-reply@"
+    - "notifications@"
+    - "mailer-daemon@"
+
+# Default settings
+defaults:
+  search_days: 30                 # Default search window
+  batch_size: 50                  # Max emails per batch operation
+  snippet_length: 100             # Characters to show in previews
+
+# State file location
+state_file: ".cope/email-state.yaml"

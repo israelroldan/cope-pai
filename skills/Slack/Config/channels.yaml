@@ -1,0 +1,56 @@
+# Slack Channel Configuration
+# Priority levels: critical, high, medium, low
+# Include in briefing: always, if_active, never
+
+channels:
+  founders-talk:
+    priority: critical
+    briefing: always
+    description: "Co-founder discussions - never miss"
+    filter: null  # All messages
+
+  project-gynzy:
+    priority: critical
+    briefing: always
+    description: "Gynzy client team - joining soon"
+    filter: null
+
+  product:
+    priority: high
+    briefing: always
+    description: "Israel's work discussions"
+    filter: null
+
+  ext-robin-radar:
+    priority: high
+    briefing: always
+    description: "Robin Radar client project"
+    filter: null
+    access: "none"  # Slack Connect channel - bot cannot access
+    note: "Check manually - shared channel with Robin Radar org"
+
+  agency-circle:
+    priority: medium
+    briefing: if_active
+    description: "Platform/product discussions"
+    filter:
+      keywords:
+        - platform
+        - product
+        - website
+        - hub
+
+  wot:
+    priority: low
+    briefing: if_active
+    description: "WoT event follow-ups (temporary)"
+    expires: "2026-02-01"  # Auto-demote after this date
+
+# Briefing thresholds
+briefing_settings:
+  # Minimum messages to include "if_active" channels
+  activity_threshold: 3
+  # How far back to look for digest
+  digest_hours: 16
+  # Max messages to summarize per channel
+  max_per_channel: 50

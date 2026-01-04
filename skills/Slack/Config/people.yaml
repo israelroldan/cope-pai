@@ -1,0 +1,43 @@
+# Key People Configuration
+# Priority levels: critical, high, medium
+# DM monitoring and response tracking
+
+people:
+  sander_kok:
+    display_name: "Sander Kok"
+    priority: critical
+    role: "Co-founder"
+    dm_monitoring: true
+    response_timeout_hours: 24
+    notes: "Co-founder, always prioritize"
+
+  maarten_van_den_heuvel_erp:
+    display_name: "Maarten van den Heuvel-Erp"
+    priority: critical
+    role: "Co-founder"
+    dm_monitoring: true
+    response_timeout_hours: 24
+    notes: "Co-founder, always prioritize"
+
+  thomas_verhappen:
+    display_name: "Thomas Verhappen"
+    priority: high
+    role: "Direct report"
+    dm_monitoring: true
+    response_timeout_hours: 48
+    notes: "Direct report, track delegated work"
+
+# Response tracking settings
+response_settings:
+  # Default timeout before flagging "no response"
+  default_timeout_hours: 48
+  # Patterns that indicate a question/request needing response
+  question_patterns:
+    - "?"
+    - "can you"
+    - "could you"
+    - "would you"
+    - "please"
+    - "let me know"
+    - "thoughts?"
+    - "what do you think"

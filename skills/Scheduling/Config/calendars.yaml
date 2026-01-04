@@ -1,0 +1,145 @@
+# Scheduling Skill - Calendar Configuration
+# Each calendar defines connection settings and defaults
+
+calendars:
+  work:
+    name: "Work"
+    description: "Work calendar for meetings, 1:1s, team events"
+    provider: google-calendar-work  # MCP server name
+    calendar_id: "primary"
+    enabled: true
+    defaults:
+      duration: 30          # minutes
+      buffer: 5             # minutes between meetings
+      hours:
+        start: "09:00"
+        end: "17:00"
+      days: [mon, tue, wed, thu, fri]
+    context_signals:
+      # Patterns that indicate this calendar
+      email_domains: ["@tatoma.eu"]     # Add work domain, e.g., ["@company.com"]
+      keywords:
+        - meeting
+        - "1:1"
+        - standup
+        - sync
+        - review
+        - sprint
+        - planning
+        - retro
+
+  # Home calendars with smart routing (iCloud via mcp-ical)
+  home:
+    provider: ical-home
+    enabled: true
+    defaults:
+      duration: 60
+      buffer: 0
+      hours:
+        start: "08:00"
+        end: "21:00"
+      days: [mon, tue, wed, thu, fri, sat, sun]
+
+    # Smart routing: match signals → target calendar
+    routing:
+      personal:
+        calendar: "Israel"
+        description: "Israel's personal appointments"
+        signals:
+          - dentist
+          - doctor
+          - haircut
+          - "my appointment"
+          - gym
+          - personal
+          - me
+          - myself
+        fallback: true  # Default if no other match
+
+      family:
+        calendar: "Family"
+        description: "Shared family events"
+        signals:
+          - family
+          - vacation
+          - trip
+          - "both kids"
+          - dinner
+          - weekend
+          - holiday
+          - christmas
+          - birthday party
+          - guests
+          - visitors
+
+      amelie:
+        calendar: "Amélie"
+        description: "Amélie's activities"
+        signals:
+          - amélie
+          - amelie
+          - piano
+          - dance
+          - "her lesson"
+          - "her friend"
+          - "amélie's"
+
+      philippe:
+        calendar: "Philippe"
+        description: "Philippe's activities"
+        signals:
+          - philippe
+          - soccer
+          - voetbal
+          - "his practice"
+          - "his friend"
+          - "philippe's"
+
+    # Read-only calendars (context, not for creating events)
+    context_only:
+      - calendar: "Holidays in Netherlands"
+        merge_with: family  # Show in family view
+        blocking: false
+
+      - calendar: "Birthdays"
+        blocking: false     # Never blocks availability
+        use_for: reminders  # Just for context
+
+# Hard constraints that block ALL calendars
+constraints:
+  school:
+    enabled: true
+    skill: School
+    description: "Amélie pickup is a hard constraint. Philippe is handled by wife (not a constraint)."
+
+    # Only Amélie creates hard constraints
+    amelie:
+      dropoff: true         # Israel handles morning dropoff
+      pickup: true          # Israel handles afternoon pickup - HARD CONSTRAINT
+      buffers:
+        dropoff_after: 65   # minutes: drive to school + to work
+        pickup_before: 20   # minutes: drive from work to school
+
+    philippe:
+      dropoff: conditional  # Only when Amélie has 2nd period (combined run)
+      pickup: false         # Wife handles - NOT a constraint
+      # Philippe's schedule is informational only unless Israel explicitly takes over
+
+  # Optional: recurring personal blocks
+  recurring:
+    - name: "Family dinner"
+      enabled: false        # Enable if needed
+      days: [mon, tue, wed, thu, fri]
+      start: "18:30"
+      end: "19:30"
+
+# Preferences for time suggestions
+preferences:
+  preferred_times:
+    - "10:00"               # Morning slot
+    - "14:00"               # Early afternoon
+  avoid_times:
+    - "12:00"               # Lunch
+    - "13:00"
+  min_meeting_gap: 5        # minutes between meetings
+  focus_time_blocks: []     # Future: protect deep work time
