@@ -6,11 +6,13 @@ Morning routine to set up the day.
 
 1. **School Logistics** — Dropoff/pickup times (from School skill)
 2. **Calendar Overview** — Today's events from all calendars (from Scheduling skill)
-3. **Slack Digest** — Overnight activity from key channels (from Slack skill)
-4. **Top Priorities** — Active items from state.yaml
-5. **Open Loops** — Things waiting on something/someone (includes Slack commitments)
-6. **Inbox** — Unprocessed items needing attention
-7. **Week Focus** — Current week's theme
+3. **Email Digest** — Unread emails, VIP messages (from Email skill)
+4. **Slack Digest** — Overnight activity from key channels (from Slack skill)
+5. **Lifelog Digest** — Overnight conversations and memories (from Lifelog skill)
+6. **Top Priorities** — Active tasks from LifeOS Tasks database
+7. **Open Loops** — Tasks with "Waiting On" property (includes Slack commitments, lifelog action items)
+8. **Inbox** — Unprocessed items from LifeOS Notes database
+9. **Week Focus** — Current quarter goals from LifeOS Goals database
 
 ## Briefing Order
 
@@ -32,28 +34,51 @@ Morning routine to set up the day.
       18:00 Family dinner (Family)
 ```
 
-### 3. Slack Digest
+### 3. Email Digest
 ```
-📱 SLACK OVERNIGHT
+EMAIL (Tatoma)
+   Unread: 5 (2 from VIPs)
+   * Sander: "Q1 Budget Review" - action needed
+   * Thomas: "Deployment status"
+
+   Pending responses: 2
+      → "API specs" to Robin Radar (2 days overdue)
+```
+
+### 4. Slack Digest
+```
+SLACK OVERNIGHT
    #founders-talk: 3 messages (Sander on Q1 planning)
    #product: API refactor discussion (7 messages)
 
-   💬 DMs: Maarten sent doc for review
+   DMs: Maarten sent doc for review
 
-   ⚠️ PENDING RESPONSES
+   PENDING RESPONSES
       → Thomas: deployment question (2d, no response)
 
-   📝 COMMITMENTS DETECTED
+   COMMITMENTS DETECTED
       → "Review PR" (promised to Thomas yesterday)
 ```
 
-### 4. Conflicts & Warnings
+### 5. Lifelog Digest
 ```
-⚠️ CONFLICT: Sprint Planning ends 15:00, pickup at 14:45
+LIFELOG OVERNIGHT
+   Conversations: 2
+   * Evening discussion about weekend plans
+
+   New memories: 1
+   "Remember to check garden irrigation"
+
+   Action items: 1 (synced to open loops)
+```
+
+### 6. Conflicts & Warnings
+```
+CONFLICT: Sprint Planning ends 15:00, pickup at 14:45
    → Leave meeting early or arrange alternate pickup
 ```
 
-### 5. Priorities & Focus
+### 7. Priorities & Focus
 ```
 📋 PRIORITIES
    1. Finish API review
@@ -72,11 +97,63 @@ Morning routine to set up the day.
 - `DailyAgenda` workflow → merged calendar view
 - Flags conflicts between calendar and school
 
+**Email skill:**
+- `InboxDigest` workflow → unread count, VIP messages
+- `TrackResponses` workflow → pending email responses
+- Surfaces emails needing action
+
 **Slack skill:**
 - `DailyDigest` workflow → overnight channel activity
 - `CommitmentScan` workflow → detected promises
 - `ResponseTracker` workflow → pending responses
 - Commitments get added to open loops
+
+**Lifelog skill:**
+- `LifelogDigest` workflow → overnight conversations and memories
+- `ActionItemSync` workflow → syncs detected action items to open loops
+- Surfaces key memories and commitments from conversations
+
+**LifeOS skill (Notion):**
+- Priorities, open loops, inbox, and goals from Notion databases
+- Replaces state.yaml as the source of truth
+
+## LifeOS Queries
+
+### Query Priorities (Tasks with High Priority)
+```
+mcp__notion-personal__notion-search(
+  query: "priority",
+  data_source_url: "collection://2dff8fbf-cf75-81ec-9d5a-000bd513a35c"
+)
+```
+Filter results for Status != "Done" and Priority = "High Priority"
+
+### Query Open Loops (Tasks with Waiting On)
+```
+mcp__notion-personal__notion-search(
+  query: "waiting",
+  data_source_url: "collection://2dff8fbf-cf75-81ec-9d5a-000bd513a35c"
+)
+```
+Filter for tasks where "Waiting On" property is not empty
+
+### Query Inbox Items
+```
+mcp__notion-personal__notion-search(
+  query: "inbox",
+  data_source_url: "collection://2dff8fbf-cf75-8171-b984-000b1a6487f3"
+)
+```
+Filter for Status = "Inbox"
+
+### Query Week Focus (Current Quarter Goals)
+```
+mcp__notion-personal__notion-search(
+  query: "Q1 2026",
+  data_source_url: "collection://2dff8fbf-cf75-811f-a2e7-000b753d5c5a"
+)
+```
+Show progress on current quarter goals
 
 ## The Key Question
 
@@ -98,5 +175,19 @@ Say "skip briefing" or "briefing done" if:
 
 ## Marking Complete
 Once briefing is done, say "briefing done" to:
-- Set `briefing_done: true` in daily.yaml
+- Create/update today's Journal entry in LifeOS with briefing status
 - Stop session-start prompts for the day
+
+```
+mcp__notion-personal__notion-create-pages(
+  parent: { data_source_id: "2dff8fbf-cf75-816e-8222-000ba6610bff" },
+  pages: [{
+    properties: {
+      "Entry": "[Date - Day of Week]",
+      "date:Date:start": "[today YYYY-MM-DD]",
+      "date:Date:is_datetime": 0
+    },
+    content: "## Morning Briefing\nBriefing completed at [time]."
+  }]
+)
+```

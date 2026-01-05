@@ -70,11 +70,7 @@ Call TrackResponses workflow to append pending reply status.
 
 ### 6. Update State
 
-Write to `.cope/email-state.yaml`:
-```yaml
-last_digest: "{timestamp}"
-unread_count: {count}
-```
+State is session-ephemeral. No persistent storage needed for digest timestamps.
 
 ---
 
@@ -115,4 +111,4 @@ unread_count: {count}
 
 - **COPE DailyBriefing:** Called automatically, output inserted after Slack digest
 - **TrackResponses:** Called to append pending response status
-- **State file:** Updates `.cope/email-state.yaml` with digest timestamp
+- **State:** Session-ephemeral (no persistent file)

@@ -69,5 +69,6 @@ defaults:
   batch_size: 50                  # Max emails per batch operation
   snippet_length: 100             # Characters to show in previews
 
-# State file location
-state_file: ".cope/email-state.yaml"
+# State tracking
+# Pending responses tracked in LifeOS Tasks database (waiting_on property)
+# Session state is ephemeral

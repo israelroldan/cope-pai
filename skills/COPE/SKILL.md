@@ -42,20 +42,31 @@ Personal executive layer — a chief of staff AI that reduces cognitive load, sh
 | **Prioritise** | Decide what matters now. Rank by impact, urgency, cost of delay. |
 | **Execute** | Turn decisions into action. Define ownership, next steps, track progress. |
 
-## State Files
+## Operating Database: LifeOS
 
-Located in `.cope/` directory of current project:
+**Primary backend is LifeOS** (personal Notion workspace). State lives in Notion, not YAML files.
 
-- `state.yaml` — priorities, open loops, inbox
-- `decisions.yaml` — decision log with rationale
-- `daily.yaml` — daily rhythm state
-- `weekly.yaml` — weekly rhythm state
+| COPE Concept | LifeOS Location |
+|--------------|-----------------|
+| Priorities | Tasks database (priority property) |
+| Open Loops | Tasks database (waiting_on property) |
+| Inbox | Inbox database |
+| Decisions | Decisions database |
+| Daily Rhythm | Journal database |
+| Week Focus | Goals database |
 
-## Tools
+### How It Works
 
-- `GetContext.ts` — Read current state
-- `UpdateState.ts` — Modify priorities/loops/inbox
-- `LogDecision.ts` — Append decision with rationale
+COPE operates through natural language commands. When you say things like:
+- "add to inbox: Research MCP options"
+- "log decision: Use REST because simpler for MVP"
+- "add priority: Finish API review"
+
+These trigger MCP calls to create/update entries in the LifeOS Notion databases. See the workflow files for specific MCP syntax.
+
+### Legacy State Files (removed)
+
+The `.cope/` YAML files (`state.yaml`, `decisions.yaml`, etc.) and CLI tools have been removed. All state now lives in LifeOS.
 
 ## Workflows
 
@@ -68,6 +79,19 @@ Located in `.cope/` directory of current project:
 - `WeekStart.md` — Monday kickoff
 - `WeekMid.md` — Wednesday check
 - `WeekEnd.md` — Friday retrospective
+
+## Skill Integrations
+
+COPE orchestrates multiple skills during briefings and reviews:
+
+| Skill | Integration |
+|-------|-------------|
+| **LifeOS** | Operating database — tasks, inbox, decisions, open loops, journal |
+| **School** | Dropoff/pickup constraints in daily briefing |
+| **Scheduling** | Calendar events, conflict detection |
+| **Email** | Inbox digest, pending responses |
+| **Slack** | Channel activity, commitments, response tracking |
+| **Lifelog** | Conversations, memories, action item sync to open loops |
 
 ## Reference
 

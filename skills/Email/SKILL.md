@@ -141,10 +141,9 @@ TrackResponses workflow monitors outgoing emails awaiting replies:
 
 ### State Tracking
 
-Email state stored in `.cope/email-state.yaml`:
-- Last digest timestamp
-- Pending response tracking
-- Read/processed message IDs
+Email state is managed within sessions. For persistent tracking:
+- **Pending responses** → Added to LifeOS Tasks with "Waiting On" = recipient email
+- **Digest history** → Session-ephemeral (no need to persist)
 
 ---
 

@@ -82,33 +82,27 @@ Per-person timeouts from `Config/people.yaml`:
 - Direct reports: 48h (give them time)
 - Default: 48h
 
-## State File
+## State Tracking
 
-Track in `.cope/slack-responses.yaml`:
-```yaml
-pending:
-  - id: "C123-1704365400"
-    question: "Status on API changes?"
-    to: "thomas_verhappen"
-    channel: "#product"
-    asked_at: "2026-01-02T14:30:00"
-    timeout_at: "2026-01-04T14:30:00"
-    reminded: false
+Pending responses tracked in LifeOS Tasks database:
 
-  - id: "D456-1704365800"
-    question: "Review the proposal?"
-    to: "sander_kok"
-    channel: "DM"
-    asked_at: "2026-01-03T10:00:00"
-    timeout_at: "2026-01-04T10:00:00"
-    reminded: false
-
-resolved:
-  - id: "C123-1704300000"
-    question: "..."
-    resolved_at: "2026-01-03T09:00:00"
-    resolution: "responded"
 ```
+mcp__notion-personal__notion-create-pages(
+  parent: { data_source_id: "2dff8fbf-cf75-81ec-9d5a-000bd513a35c" },
+  pages: [{
+    properties: {
+      "Task": "Response: [question summary]",
+      "Status": "In Progress",
+      "Priority": "Low Priority ",
+      "Waiting On": "[person_name]",
+      "Tags": "Slack Response"
+    },
+    content: "Channel: [channel]\nAsked: [timestamp]\nThread: [link]"
+  }]
+)
+```
+
+When resolved, update task status to "Done".
 
 ## Output in Briefing
 

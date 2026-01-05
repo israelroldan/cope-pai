@@ -108,12 +108,6 @@ After summary, offer:
 
 ## State Tracking
 
-Record catchup timestamp:
-```yaml
-# .cope/slack-state.yaml
-last_catchup:
-  founders-talk: "2026-01-04T09:00:00"
-  product: "2026-01-03T14:00:00"
-```
-
-Next catchup for same channel starts from this point.
+Catchup state is session-ephemeral. When catching up:
+- Default to 24h lookback if no specific time range given
+- User can specify "since Monday", "last 48h", etc.

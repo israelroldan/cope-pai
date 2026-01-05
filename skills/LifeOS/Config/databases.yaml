@@ -1,0 +1,53 @@
+# LifeOS Database Configuration
+# Auto-discovered 2026-01-05
+# Used by COPE for state management
+
+databases:
+  # Core LifeOS databases
+  tasks:
+    database_id: "2dff8fbf-cf75-810b-88df-e061df8cad3b"
+    data_source: "collection://2dff8fbf-cf75-81ec-9d5a-000bd513a35c"
+    title_property: "Task"
+    notes: "Added 'Waiting On' property for COPE open loops"
+
+  projects:
+    database_id: "2dff8fbf-cf75-814f-9725-d9eb46459cf1"
+    data_source: "collection://2dff8fbf-cf75-81fd-a415-000bf3a8efdc"
+    title_property: "Project"
+
+  journal:
+    database_id: "2dff8fbf-cf75-8194-a765-fb3b1977c673"
+    data_source: "collection://2dff8fbf-cf75-816e-8222-000ba6610bff"
+    title_property: "Entry"
+
+  goals:
+    database_id: "2dff8fbf-cf75-81f5-8ad7-ee37c0736a12"
+    data_source: "collection://2dff8fbf-cf75-811f-a2e7-000b753d5c5a"
+    title_property: "Goal"
+
+  notes:
+    database_id: "2dff8fbf-cf75-8160-b62e-c381cb69c222"
+    data_source: "collection://2dff8fbf-cf75-8171-b984-000b1a6487f3"
+    title_property: "Note"
+    notes: "Used as Inbox - items have Status: Inbox/To Review/Archive"
+
+  # COPE-specific databases
+  decisions:
+    database_id: "8721aa7d-8f73-4189-ab8b-3acb60590d05"
+    data_source: "collection://8df780cc-91fe-4c51-9c59-d8f20c7dbd7b"
+    title_property: "Decision"
+    notes: "Created for COPE decision logging"
+
+# Property mappings for COPE concepts
+cope_mappings:
+  priorities: "tasks"           # Tasks with Priority set
+  open_loops: "tasks"           # Tasks with 'Waiting On' property filled
+  inbox: "notes"                # Notes with Status = Inbox
+  decisions: "decisions"        # Decisions database
+  daily_rhythm: "journal"       # Journal entries
+  week_focus: "goals"           # Goals database
+
+# Dashboard
+lifeos_dashboard:
+  page_id: "2dff8fbf-cf75-80a4-bda5-e13afce2e0fc"
+  url: "https://www.notion.so/2dff8fbfcf7580a4bda5e13afce2e0fc"

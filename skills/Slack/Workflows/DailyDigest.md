@@ -87,13 +87,7 @@ This output gets inserted into COPE DailyBriefing between:
 
 ## State Tracking
 
-After digest is generated, record:
-```yaml
-# In .cope/slack-state.yaml
-last_digest: "2026-01-04T08:30:00"
-channels_checked:
-  founders-talk: "ts:1704365400"
-  product: "ts:1704365400"
-```
-
-This prevents re-surfacing same messages next briefing.
+Digest state is session-ephemeral:
+- Default lookback: 16 hours (covers overnight)
+- Briefing can be run multiple times; each shows latest activity
+- Pending responses tracked in LifeOS Tasks (see ResponseTracker workflow)

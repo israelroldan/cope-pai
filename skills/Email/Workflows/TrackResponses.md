@@ -18,22 +18,18 @@ Monitors sent emails awaiting responses and flags overdue items.
 
 ### 1. Load Tracking State
 
-Read `.cope/email-state.yaml`:
+Query LifeOS Tasks database for items with "Waiting On" containing email addresses:
 
-```yaml
-pending_responses:
-  - thread_id: "abc123"
-    subject: "API Integration Specs"
-    to: "client@robinradar.com"
-    sent: "2026-01-02T14:00:00"
-    expected_by: null  # or explicit deadline
-
-  - thread_id: "def456"
-    subject: "Contract Review"
-    to: "legal@partner.com"
-    sent: "2026-01-03T10:00:00"
-    expected_by: "2026-01-05"
 ```
+mcp__notion-personal__notion-search(
+  query: "waiting email",
+  data_source_url: "collection://2dff8fbf-cf75-81ec-9d5a-000bd513a35c"
+)
+```
+
+Filter for tasks where:
+- "Waiting On" contains an email address pattern
+- Tags include "Email Response"
 
 ### 2. Check for Responses
 
@@ -127,31 +123,37 @@ ComposeEmail adds to tracking when:
 
 ### Adding to Tracking
 
-After sending (from ComposeEmail):
+After sending to external recipient (from ComposeEmail), create a LifeOS task:
 
-```yaml
-# Append to pending_responses
-- thread_id: "{new_thread_id}"
-  subject: "{subject}"
-  to: "{recipient}"
-  sent: "{timestamp}"
-  expected_by: null
-  flags:
-    has_question: true
-    has_deadline: false
+```
+mcp__notion-personal__notion-create-pages(
+  parent: { data_source_id: "2dff8fbf-cf75-81ec-9d5a-000bd513a35c" },
+  pages: [{
+    properties: {
+      "Task": "Response: {subject}",
+      "Status": "In Progress",
+      "Priority": "Low Priority ",
+      "Waiting On": "{recipient_email}",
+      "Tags": "Email Response"
+    }
+  }]
+)
 ```
 
 ### Removing from Tracking
 
-When response received or manually resolved:
+When response received or manually resolved, update the task status:
 
-```yaml
-# Move to resolved (for history)
-resolved:
-  - thread_id: "abc123"
-    subject: "API Integration Specs"
-    resolved: "2026-01-04T16:00:00"
-    resolution: "response_received"  # or "manually_closed"
+```
+mcp__notion-personal__notion-update-page(
+  data: {
+    page_id: "{task_page_id}",
+    command: "update_properties",
+    properties: {
+      "Status": "Done"
+    }
+  }
+)
 ```
 
 ---
@@ -233,4 +235,4 @@ Israel
 - **COPE DailyBriefing:** Append pending count and overdue items
 - **ComposeEmail:** Add new outgoing emails to tracking
 - **InboxDigest:** Cross-reference with unread (response in inbox?)
-- **State file:** `.cope/email-state.yaml`
+- **LifeOS Tasks:** Stores pending responses as tasks with "Waiting On" property

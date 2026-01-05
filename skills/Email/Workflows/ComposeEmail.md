@@ -137,14 +137,21 @@ draft_email(
 
 ### 7. Track for Responses
 
-If sending to external recipient, add to response tracking:
-```yaml
-# .cope/email-state.yaml
-pending_responses:
-  - thread_id: "xyz789"
-    subject: "API Integration"
-    to: "client@robinradar.com"
-    sent: "2026-01-04T15:30:00"
+If sending to external recipient, create a tracking task in LifeOS:
+
+```
+mcp__notion-personal__notion-create-pages(
+  parent: { data_source_id: "2dff8fbf-cf75-81ec-9d5a-000bd513a35c" },
+  pages: [{
+    properties: {
+      "Task": "Response: API Integration",
+      "Status": "In Progress",
+      "Priority": "Low Priority ",
+      "Waiting On": "client@robinradar.com",
+      "Tags": "Email Response"
+    }
+  }]
+)
 ```
 
 ---
