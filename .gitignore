@@ -25,3 +25,5 @@ node_modules
 *.lock
 history/sessions
 history/raw-outputs
+
+.mcp.json

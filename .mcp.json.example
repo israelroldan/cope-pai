@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "slack-tatoma": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "SLACK_MCP_XOXB_TOKEN=SLACK_MCP_XOXB_TOKEN_HERE",
+        "-e", "SLACK_MCP_ADD_MESSAGE_TOOL=true",
+        "ghcr.io/korotovsky/slack-mcp-server:latest",
+        "mcp-server", "--transport", "stdio"
+      ]
+    },
+    "magister": {
+      "command": "node",
+      "args": ["/Users/israel/code/israelroldan/magister-mcp/dist/index.js"],
+      "env": {
+        "MAGISTER_SCHOOL": "MAGISTER_SCHOOL_HERE",
+        "MAGISTER_USER": "MAGISTER_USER_HERE",
+        "MAGISTER_PASS": "MAGISTER_PASS_HERE"
+      }
+    },
+    "google-calendar-work": {
+      "command": "npx",
+      "args": ["-y", "@cocal/google-calendar-mcp"],
+      "env": {
+        "GOOGLE_OAUTH_CREDENTIALS": "/Users/israel/.config/cope/credentials/google-oauth-work.json"
+      }
+    },
+    "ical-home": {
+      "command": "uv",
+      "args": ["--directory", "/Users/israel/code/mcp-ical", "run", "mcp-ical"]
+    },
+    "gmail-work": {
+      "command": "npx",
+      "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
+    },
+    "omi": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "-e", "OMI_API_KEY=OMI_API_KEY_HERE", "omiai/mcp-server"]
+    },
+    "notion-work": {
+      "type": "sse",
+      "url": "https://mcp.notion.com/sse"
+    },
+    "notion-personal": {
+      "type": "sse",
+      "url": "https://mcp.notion.com/sse"
+    }
+  }
+}
